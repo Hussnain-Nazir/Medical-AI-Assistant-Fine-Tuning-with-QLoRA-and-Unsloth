@@ -19,7 +19,7 @@
 
 ---
 
-## What's in This Project
+## File Structure
 
 ```
 Medical-AI-Assistant-Fine-Tuning/
@@ -35,9 +35,6 @@ Medical-AI-Assistant-Fine-Tuning/
 ├── requirements.txt                         
 └── README.md                                 
 ```
-
-> **The `src/` folder, `.txt` guides, and diagram files from earlier versions
-> are not part of this project.** Everything is self-contained inside the notebook.
 
 ---
 
