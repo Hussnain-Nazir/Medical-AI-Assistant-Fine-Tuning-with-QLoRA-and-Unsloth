@@ -19,7 +19,7 @@
 
 ---
 
-## File Structure
+## Folder Structure
 
 ```
 Medical_AI_Assistant_Fine_Tuning/
