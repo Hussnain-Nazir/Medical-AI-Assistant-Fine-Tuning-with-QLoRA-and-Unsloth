@@ -9,12 +9,12 @@
 
 | Item | Detail |
 |---|---|
-| **Notebook** | `Medical_Fine_Tuning.ipynb` |
+| **Notebook** | `Medical_AI_Assistant_Fine_Tuning.ipynb` |
 | **Base model** | `unsloth/Llama-3.2-3B-Instruct` |
-| **Method** | QLoRA — 4-bit NF4 quantisation + LoRA adapters |
+| **Method** | QLoRA - 4-bit NF4 quantisation + LoRA adapters |
 | **Dataset** | `medalpaca/medical_meadow_medqa` (USMLE-style Q&A) |
 | **Framework** | Unsloth + HuggingFace TRL (`SFTTrainer` / `SFTConfig`) |
-| **Hardware** | Google Colab free tier — T4 GPU (15 GB VRAM) |
+| **Hardware** | Google Colab free tier - T4 GPU (15 GB VRAM) |
 | **Training time** | ~20 min (500 samples, 1 epoch) |
 
 ---
@@ -22,8 +22,8 @@
 ## File Structure
 
 ```
-Medical-AI-Assistant-Fine-Tuning/
-├── Medical-AI-Assistant-Fine-Tuning.ipynb   ← Notebook
+Medical_AI_Assistant_Fine_Tuning/
+├── Medical_AI_Assistant_Fine_Tuning.ipynb   ← Notebook
 ├── outputs/                                  ← Created by the notebook at runtime
 │   ├── medical_lora_adapter/                 ← Trained adapter weights (download this)
 │   │   ├── adapter_config.json
@@ -40,32 +40,32 @@ Medical-AI-Assistant-Fine-Tuning/
 
 ## Quick Start
 
-### Step 1 — Open in Google Colab
+### Step 1 - Open in Google Colab
 
 1. Go to [colab.research.google.com](https://colab.research.google.com)
 2. Click **File → Upload notebook** → select `Medical_AI_Assistant_Fine_Tuning.ipynb`
 3. Click **Runtime → Change runtime type → T4 GPU → Save**
 
-### Step 2 — Run the Notebook
+### Step 2 - Run the Notebook
 
-Click **Runtime → Run all** — or run each cell top to bottom.
+Click **Runtime → Run all** - or run each cell top to bottom.
 
 > After Cell 2 finishes installing, Colab may show a **Restart Runtime** button.
 > Click it, then re-run from Cell 1.
 
-### Step 3 — Download Your Results
+### Step 3 - Download Your Results
 
 Once training completes, go to the **Files panel** (folder icon, left sidebar):
-- Download `/content/medical_lora_adapter/` — your trained model
-- Download `/content/training_loss_curve.png` — your loss chart
+- Download `/content/medical_lora_adapter/` - your trained model
+- Download `/content/training_loss_curve.png` - your loss chart
 
 ---
 
-## Notebook Cells — What Each One Does
+## Notebook Cells - What Each One Does
 
 | Cell | Purpose |
 |---|---|
-| **Cell 1** | GPU check — verifies T4 is connected before anything else |
+| **Cell 1** | GPU check - verifies T4 is connected before anything else |
 | **Cell 2** | Install all dependencies (Unsloth, unsloth_zoo, TRL, HuggingFace stack) |
 | **Cell 3** | Imports + global config (`CFG` dictionary with all hyperparameters) |
 | **Cell 4** | `gpu_stats()` and `free_memory()` helper functions |
@@ -91,10 +91,10 @@ Once training completes, go to the **Files panel** (folder icon, left sidebar):
 
 QLoRA = **Q**uantisation + **Lo**w-**R**ank **A**daptation.
 
-1. The base model weights are loaded in **4-bit NF4** format (frozen) — reducing
+1. The base model weights are loaded in **4-bit NF4** format (frozen) - reducing
    Llama-3.2-3B from ~6 GB to ~1.7 GB VRAM.
 2. Small trainable **LoRA adapter matrices** (A and B) are added beside the frozen
-   weights. Only these are updated during training — about **0.8% of all parameters**.
+   weights. Only these are updated during training - about **0.8% of all parameters**.
 3. Combined effect: fine-tuning quality close to full training at a fraction of the
    memory cost.
 
@@ -107,21 +107,21 @@ QLoRA = **Q**uantisation + **Lo**w-**R**ank **A**daptation.
 ### Why Llama-3.2-3B-Instruct?
 
 - Small enough for the free T4 even without quantisation
-- Already instruction-tuned — strong medical Q&A baseline
+- Already instruction-tuned - strong medical Q&A baseline
 - 128k token vocabulary handles medical terminology well
 - Unsloth ships hand-optimised Triton kernels for Llama-3 → ~2× training speed
-- Open weights — no API key required
+- Open weights - no API key required
 
 ### Why medalpaca/medical_meadow_medqa?
 
 - USMLE Step 1-3 style clinical questions
-- Already in `{instruction, input, output}` format — minimal preprocessing
+- Already in `{instruction, input, output}` format - minimal preprocessing
 - ~11k curated pairs, Apache 2.0 licence
 - Covers pharmacology, anatomy, pathology, clinical diagnosis
 
 ---
 
-## Configuration (CFG Dictionary — Cell 3)
+## Configuration (CFG Dictionary - Cell 3)
 
 ```python
 CFG = {
